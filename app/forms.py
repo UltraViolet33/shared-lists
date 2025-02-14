@@ -11,15 +11,6 @@ from wtforms import (
 from wtforms.validators import DataRequired
 
 
-class RegisterForm(FlaskForm):
-    username = StringField("username", validators=[DataRequired()])
-    email = EmailField("email", validators=[DataRequired()])
-    password = PasswordField("password", validators=[DataRequired()])
-    password_confirmation = PasswordField(
-        "password_confirmation", validators=[DataRequired()]
-    )
-
-
 class LoginForm(FlaskForm):
     email = EmailField("email", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])

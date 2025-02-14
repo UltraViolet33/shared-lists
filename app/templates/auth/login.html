@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% block title %}
-Login
+Se connecter
 {% endblock %} {% block content %}
 <div class="form-container">
-    <h1 class="title">Login</h1>
+    <h1 class="title">Se connecter</h1>
     <form method="POST">
         {{ form.csrf_token }}
         <div>{{ form.email.label }}
@@ -10,7 +10,10 @@ Login
         <div>{{ form.password.label }}
             {{ form.password() }}</div>
         <div>
-            <button type="submit">Se connecter</button>
+            <input type="submit" value="Se connecter" aria-describedby="invalid-helper" />
+            <small id="invalid-helper" class="form-error" style="display: {{ 'block' if login_failed else 'none' }};">
+               Mauvais email ou mot de passe
+            </small>
         </div>
     </form>
 </div>
