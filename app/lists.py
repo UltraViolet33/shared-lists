@@ -31,3 +31,13 @@ def get_tasks(list_id):
     tasks = list.tasks
     tasks = [task.to_dict() for task in tasks]
     return {"tasks": tasks}, 200
+
+
+@lists.route("/lists/<int:list_id>/tasks/<task_name>/toggle_status", methods=["GET", "POST"])
+@login_required
+def toggle_task_status(list_id, task_name):
+    list = List.query.get(list_id)
+    task = Task.query.filter_by(name=task_name).first()
+    task.toggle_status()
+    list.save()
+    return {"status": "success"}, 200

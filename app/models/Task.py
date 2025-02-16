@@ -19,3 +19,8 @@ class Task(db.Model, Model):
 
     def to_dict(self):
         return self.name
+
+
+    def toggle_status(self):
+        self.status = not self.status
+        return self.status

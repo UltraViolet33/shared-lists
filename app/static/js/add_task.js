@@ -23,18 +23,33 @@ async function displayTasks() {
         const tasks = fetchTasksList(listId);
 
         tasks.then((data) => {
-            // console.log("Data loaded:", data);
             for (const task of data) {
                 const taskElement = document.createElement("div");
                 taskElement.classList.add("task");
                 taskElement.innerHTML = `
-                <input type="checkbox" id="task-${task}" />
+                <input type="checkbox" id="${task}" data-list-id="${listId}" class="taskCheckboxes" onchange="return toggleTaskStatus(event)" />
                 <label for="task-${task}">${task}</label>`;
                 tasksList.appendChild(taskElement);
             }
         });
     }
 }
+
+async function toggleTaskStatus(event) {
+    const task = event.target.id;
+    const listId = event.target.getAttribute("data-list-id");
+    try {
+        const response = await fetch(`/lists/${listId}/tasks/${task}/toggle_status`, {
+            method: "POST",
+        });
+        const result = await response.json();
+        displayTasks();
+        // console.log("Server response:", result);
+    } catch (error) {
+        // console.error("Error sending request:", error);
+    }
+}
+
 
 async function preloadData() {
     try {
