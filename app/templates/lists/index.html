@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block title %}
+Home
+{% endblock %} {% block content %}
+
+<div class="">
+    {% for list in lists %}
+    <div class="form-container">
+        <h3 class="title">{{list.name}}</h3>
+        <input id="autoComplete-{{list.id}}" data-list-id="{{list.id}}" class="autoComplete"
+            placeholder="Ajouter une tâche" />
+        <button id="searchBtn-{{list.id}}" data-list-id="{{list.id}}" class="createBtn">Search</button>
+        <div class="tasks" id="tasks-{{list.id}}" data-list-id="{{list.id}}"></div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/autoComplete.min.js"></script>
+<script src="{{ url_for('static', filename='js/add_task.js') }}"></script>
+{% endblock %}
