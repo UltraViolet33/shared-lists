@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block title %}
+Login
+{% endblock %} {% block content %}
+<div class="form-container">
+    <h1 class="title">Login</h1>
+    <form method="POST">
+        {{ form.csrf_token }}
+        <div>{{ form.username.label }}
+            {{ form.username() }}</div>
+        <div>{{ form.password.label }}
+            {{ form.password() }}</div>
+        <div>
+            <input type="submit" value="Login" aria-describedby="invalid-helper" />
+            <small id="invalid-helper" class="form-error" style="display: {{ 'block' if login_failed else 'none' }};">
+                Bad credentials
+            </small>
+        </div>
+    </form>
+</div>
+{% endblock %}
