@@ -18,10 +18,10 @@ def login():
     form = LoginForm()
     login_failed = False
     if request.method == "POST" and form.validate_on_submit():
-        email = request.form.get("email")
+        username = request.form.get("username")
         password = request.form.get("password")
 
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(username=username).first()
 
         if user and user.is_password_correct(password):
             login_user(user, remember=True)

@@ -8,14 +8,12 @@ class User(db.Model, UserMixin, Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String(150), unique=True, nullable=False)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password_hashed = db.Column(db.String(255), nullable=False)
 
     lists = db.relationship("List", back_populates="user")
 
-    def __init__(self, email, username, password_plaintext):
-        self.email = email
+    def __init__(self, username, password_plaintext):
         self.username = username
         self.set_password(password_plaintext)
 
