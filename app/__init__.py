@@ -11,7 +11,7 @@ login_manager = LoginManager()
 migrate = Migrate()
 limiter = Limiter(
     key_func=get_remote_address,
-    default_limits=[],  # No global limits, only for specific routes
+    default_limits=[],
     storage_uri="memory://",
 )
 
