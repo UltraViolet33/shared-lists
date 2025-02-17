@@ -21,7 +21,7 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if user and user.is_password_correct(password):
-            login_user(user)
+            login_user(user, remember=True)
             return redirect(url_for("lists.index"))
 
         login_failed = True

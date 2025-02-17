@@ -1,17 +1,5 @@
 from .. import db
 from .Model import Model
-from .Task import Task
-
-lists_tasks = db.Table(
-    "lists_tasks",
-    db.Column("lists_id", db.Integer, db.ForeignKey("lists.id")),
-    db.Column(
-        "tasks_id",
-        db.Integer,
-        db.ForeignKey("tasks.id"),
-    ),
-    db.Column("status", db.Integer, nullable=False, default=0),
-)
 
 
 class List(db.Model, Model):
@@ -25,7 +13,7 @@ class List(db.Model, Model):
 
     tasks = db.relationship(
         "Task",
-        secondary=lists_tasks,
+        secondary="lists_tasks",
         back_populates="lists",
     )
 

@@ -23,15 +23,30 @@ async function displayTasks() {
         const tasks = fetchTasksList(listId);
 
         tasks.then((data) => {
+            console.log(data);
+
             for (const task of data) {
+                console.log(task);
+
                 const taskElement = document.createElement("div");
                 taskElement.classList.add("task");
+                let isChecked = task.status ? "checked" : "";
+                console.log(isChecked);
+
                 taskElement.innerHTML = `
-                <input type="checkbox" id="${task}" data-list-id="${listId}" class="taskCheckboxes" onchange="return toggleTaskStatus(event)" />
-                <label for="task-${task}">${task}</label>`;
+                <input type="checkbox" id="${task.name}" data-list-id="${listId}" class="taskCheckboxes " ${isChecked} onchange="return toggleTaskStatus(event) " />
+                <label class="${isChecked ? "task-done" : ""}" for="task-${task.id}">${task.name}</label>`;
                 tasksList.appendChild(taskElement);
             }
         });
+
+        const toggleStatusBtn = document.querySelectorAll(".taskCheckboxes");
+        for (const btn of toggleStatusBtn) {
+            btn.addEventListener("change", (event) => {
+                toggleTaskStatus(event);
+                displayTasks()
+            });
+        }
     }
 }
 
@@ -68,10 +83,13 @@ function initializeAutoComplete() {
     for (const input of autoCompleteInputs) {
         let listId = input.getAttribute("data-list-id");
         let selector = `#autoComplete-${listId}`;
+        console.log(allData)
+        let tasks_names = allData.map(task => task.name);
+
         const autoCompleteJS = new autoComplete({
             selector: selector,
             data: {
-                src: allData,
+                src: tasks_names,
             },
             resultItem: {
                 highlight: true,

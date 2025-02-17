@@ -42,7 +42,9 @@ def register_blueprints(app):
     from .auth import auth
     from .tasks import tasks
     from .lists import lists
+    from .commands import commands
 
     app.register_blueprint(auth, url_prefix="/")
     app.register_blueprint(lists, url_prefix="/")
     app.register_blueprint(tasks, url_prefix="/tasks")
+    app.register_blueprint(commands)
