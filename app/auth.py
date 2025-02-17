@@ -3,11 +3,14 @@ from flask_login import login_user, current_user, login_required, logout_user
 from .forms import LoginForm
 from .models.User import User
 from .models.Task import Task
+from app import limiter
+
 
 auth = Blueprint("auth", __name__)
 
 
 @auth.route("/login", methods=["GET", "POST"])
+@limiter.limit("5 per hour")
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("lists.index"))
@@ -29,6 +32,11 @@ def login():
     return render_template(
         "auth/login.html", form=form, user=current_user, login_failed=login_failed
     )
+
+
+@auth.errorhandler(429)
+def ratelimit_error(e):
+    return {"error": 429}, 429
 
 
 @auth.route("/logout")
